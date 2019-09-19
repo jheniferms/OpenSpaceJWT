@@ -54,7 +54,19 @@ namespace OpenSpace
                 options.IncludeXmlComments(pathXmlDoc);
 
                 //Passo 6 - Configuracao do JWT no Swagger
+                var security = new Dictionary<string, IEnumerable<string>>
+                {
+                    {"Bearer", new string[] { }},
+                };
 
+                options.AddSecurityDefinition("Bearer", new ApiKeyScheme
+                {
+                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Name = "Authorization",
+                    In = "header",
+                    Type = "apiKey"
+                });
+                options.AddSecurityRequirement(security);
             });
 
             services.AddSingleton<IMovieService, MovieService>();
