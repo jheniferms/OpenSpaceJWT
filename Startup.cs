@@ -27,7 +27,7 @@ namespace OpenSpace
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             // Configurando o serviço de documentação do Swagger
@@ -57,6 +57,22 @@ namespace OpenSpace
             services.AddSingleton<IMovieService, MovieService>();
             services.AddSingleton<IActorService, ActorService>();
             services.AddSingleton<ILoginService, LoginService>();
+
+            //Passo 2 - Configuração do serviço de autenticação JWT
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true, //validar o servidor que gera o token
+                        ValidateAudience = true, //validar o destinatirio 
+                        ValidateLifetime = true, //validar se o token não expirou e se o key é valida
+                        ValidateIssuerSigningKey = true, //validar a assinatura
+                        ValidIssuer = Configuration["Jwt:Issuer"], //emissor
+                        ValidAudience = Configuration["Jwt:Audience"], //publico alvo
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"])) //chave
+                    };
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -72,6 +88,9 @@ namespace OpenSpace
             }
 
             app.UseHttpsRedirection();
+
+            //Passo 3 - Disponibilizar o serviço de autenticação 
+            app.UseAuthentication();
 
             app.UseMvc();
 
