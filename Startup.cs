@@ -52,6 +52,9 @@ namespace OpenSpace
                 string pathXmlDoc = Path.Combine(pathApplication, $"{nameApplication}.xml");
 
                 options.IncludeXmlComments(pathXmlDoc);
+
+                //Passo 6 - Configuracao do JWT no Swagger
+
             });
 
             services.AddSingleton<IMovieService, MovieService>();

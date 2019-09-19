@@ -24,7 +24,8 @@ namespace OpenSpace.Sevices.Implementation
                     Name= "Jhenifer",
                     Password = "lux123",
                     UserName = "jsantos",
-                    CellPhone ="(19)95555-5555"
+                    CellPhone ="(19)95555-5555",
+                    NickName = "Jheni"
                 }
             };
         }
