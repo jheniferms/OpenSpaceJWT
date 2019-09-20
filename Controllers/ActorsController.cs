@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OpenSpace.Models;
 using OpenSpace.Request;
@@ -10,6 +11,8 @@ using System.Threading.Tasks;
 
 namespace OpenSpace.Controllers
 {
+    //Passo 9
+    [Authorize(Roles ="Admin")]
     [ApiController]
     [Produces("application/json")]
     [Route("api/[controller]")]

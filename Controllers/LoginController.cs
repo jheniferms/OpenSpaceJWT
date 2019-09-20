@@ -85,8 +85,8 @@ namespace OpenSpace.Controllers
                     new Claim(ClaimTypes.NameIdentifier, user.UserName),
                     new Claim(ClaimTypes.Name, user.Name),
                     new Claim(ClaimTypes.MobilePhone, user.CellPhone),
-                    new Claim("NickName", user.NickName)
-                    //new Claim(ClaimTypes.Role, user.UserType.ToString()),
+                    new Claim("NickName", user.NickName),
+                    new Claim(ClaimTypes.Role, user.Role) //passo 10
                 }),
 
                 Expires = DateTime.UtcNow.AddDays(40),

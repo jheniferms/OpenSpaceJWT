@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace OpenSpace.Controllers
 {
     //Passo 7
-    [Authorize]
+    [Authorize(Roles ="User")]
     [ApiController]
     [Produces("application/json")]
     [Route("api/[controller]")]
