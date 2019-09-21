@@ -74,23 +74,22 @@ namespace OpenSpace.Controllers
         private string CreateToken(User user)
         {
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+            //configuração da chave
             string securityKey = _configuration["Jwt:Key"];
             SymmetricSecurityKey symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(securityKey));
 
             SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
-            {
+            {   
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                     new Claim(ClaimTypes.NameIdentifier, user.UserName),
                     new Claim(ClaimTypes.Name, user.Name),
-                    new Claim(ClaimTypes.MobilePhone, user.CellPhone),
                     new Claim("NickName", user.NickName)
-                    //new Claim(ClaimTypes.Role, user.UserType.ToString()),
                 }),
 
                 Expires = DateTime.UtcNow.AddDays(40),
-                SigningCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256Signature),
+                SigningCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256Signature),//configuração de criptografia
                 Issuer = _configuration["Jwt:Issuer"],
                 Audience = _configuration["Jwt:Audience"]
             };
